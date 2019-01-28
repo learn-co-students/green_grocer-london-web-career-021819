@@ -17,8 +17,9 @@ end
 
 def apply_coupons(cart, coupons)
   coup = coupons[0][:item]
+  cost = coupons[0][:cost]
     if cart.has_key?(coup)
-      cart["#{coup} W/COUPON"] = {}
+      cart["#{coup} W/COUPON"] = {:price => cost}
     end
   cart
 end
