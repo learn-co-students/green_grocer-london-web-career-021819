@@ -43,7 +43,7 @@ def apply_clearance(cart) # not an array in this test case!
   cart
 end
 
-def checkout(cart, coupons)
+def checkout(cart: [], coupons: [])
   consolidated = consolidate_cart(cart)
   couponed = apply_coupons(consolidated, coupons)
   cleared = apply_clearance(couponed)
