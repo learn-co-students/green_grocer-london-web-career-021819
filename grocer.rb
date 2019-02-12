@@ -2,7 +2,6 @@ require 'pry'
 
 def consolidate_cart(cart)
   basket = {}
-
     cart.each do |item| # cart is an array of items
       item.each do |name, details| # each item has a name and a hash of details
         if basket.has_key?(name) # could also just say 'if basket[name]'...(if item with that name is already in the basket it will evaluate to true)
@@ -13,7 +12,6 @@ def consolidate_cart(cart)
         end
       end
     end
-
   basket
 end
 
@@ -46,26 +44,17 @@ def apply_clearance(cart) # not an array in this test case!
 end
 
 def checkout(cart, coupons)
-  # binding.pry
   consolidated = consolidate_cart(cart)
-# binding.pry
   couponed = apply_coupons(consolidated, coupons)
-  # binding.pry
   cleared = apply_clearance(couponed)
-  # binding.pry
   # calculate the total
   total = 0
   cleared.each do |item, attributes|
-    # binding.pry
-    if attributes[:count] > 0
-      total += attributes[:price]
-    end
+      total += attributes[:price] * attributes[:count]
   end
-  total
-  # binding.pry
-
+  # apply a 10% discount if total is over $100
   if total > 100
-    to_pay = total * 0.1
+    to_pay = total * 0.9
   else
     total
   end
