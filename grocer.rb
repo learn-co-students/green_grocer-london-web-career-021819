@@ -20,12 +20,12 @@ def apply_coupons(cart, coupons)
     c_cost = info[:cost]  #price of the items after teh coupon
     c_name = "#{c_item} W/COUPON" # name of couponed items in the cart
     if cart[c_item] && cart[c_item][:count] >= c_num #if the cart contains the coupon items in the right amount
-      num = cart[c_item][:count] / c_num
-      cart[c_name] = {price: c_cost, clearance: cart[c_item][:clearance], count: num}
+      num = cart[c_item][:count] / c_num #how many times the coupon can apply
+      cart[c_name] = {price: c_cost, clearance: cart[c_item][:clearance], count: num} #adding the new couponed items to the cart
 
-      cart[c_item][:count] = cart[c_item][:count] % c_num
+      cart[c_item][:count] = cart[c_item][:count] % c_num #number of items left after couponed items are removed
       if cart[c_item][:count] == 0
-        cart.delete(cart[c_item])
+        cart.delete(cart[c_item]) #if there are no originalitems left delete te item from teh cart
       end
     end
   end
@@ -33,7 +33,12 @@ def apply_coupons(cart, coupons)
 end
 
 def apply_clearance(cart)
-  # code here
+  cart.each do |items, item_name|
+    if item_name[:clearance] == true
+      item_name[:price] = (item_name[:price] * 0.8).round(2)
+    end
+  end
+  cart
 end
 
 def checkout(cart, coupons)
